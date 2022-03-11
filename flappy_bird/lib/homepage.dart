@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flappy_bird/bird.dart';
 import 'package:flutter/material.dart';
 
+import 'barriers.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -50,20 +52,40 @@ class _HomePageState extends State<HomePage> {
         children: [
           Expanded(
               flex: 2,
-              child: GestureDetector(
-                onTap: () {
-                  if (isGameRunning) {
-                    jump();
-                  } else {
-                    startGame();
-                  }
-                },
-                child: AnimatedContainer(
-                  alignment: Alignment(0, birdYaxis),
-                  duration: const Duration(milliseconds: 0),
-                  child: MyBird(),
-                  color: Colors.blue,
-                ),
+              child: Stack(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      if (isGameRunning) {
+                        jump();
+                      } else {
+                        startGame();
+                      }
+                    },
+                    child: AnimatedContainer(
+                      alignment: Alignment(0, birdYaxis),
+                      duration: const Duration(milliseconds: 0),
+                      child: MyBird(),
+                      color: Colors.blue,
+                    ),
+                  ),
+                  Container(
+                    alignment: const Alignment(0, -0.25),
+                    child: isGameRunning
+                        ? const Text(" ")
+                        : const Text(
+                            "T A P  T O  P L A Y",
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                            ),
+                          ),
+                  ),
+                  AnimatedContainer(
+                      alignment: Alignment(0, 1.1),
+                      duration: Duration(milliseconds: 0),
+                      child: MyBarrier(size: 200.0)),
+                ],
               )),
           Container(
             height: 15,
