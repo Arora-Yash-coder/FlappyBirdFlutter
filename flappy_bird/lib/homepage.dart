@@ -17,8 +17,12 @@ class _HomePageState extends State<HomePage> {
   double time = 0;
   double height = 0;
   double initialHeight = birdYaxis;
-  double velocity = 2.8;
+  double velocity = 2.5;
   bool isGameRunning = false;
+
+  static double barrierXone = 0;
+  static double barrierXtwo = barrierXone + 1.5;
+  double barrierXthree = barrierXtwo + 1.5;
 
   void jump() {
     setState(() {
@@ -82,8 +86,28 @@ class _HomePageState extends State<HomePage> {
                           ),
                   ),
                   AnimatedContainer(
-                      alignment: Alignment(0, 1.1),
-                      duration: Duration(milliseconds: 0),
+                      alignment: Alignment(barrierXone, 1.1),
+                      duration: const Duration(milliseconds: 0),
+                      child: MyBarrier(size: 200.0)),
+                  AnimatedContainer(
+                      alignment: Alignment(barrierXone, -1.1),
+                      duration: const Duration(milliseconds: 0),
+                      child: MyBarrier(size: 200.0)),
+                  AnimatedContainer(
+                      alignment: Alignment(barrierXtwo, 1.1),
+                      duration: const Duration(milliseconds: 0),
+                      child: MyBarrier(size: 200.0)),
+                  AnimatedContainer(
+                      alignment: Alignment(barrierXtwo, -1.1),
+                      duration: const Duration(milliseconds: 0),
+                      child: MyBarrier(size: 200.0)),
+                  AnimatedContainer(
+                      alignment: Alignment(barrierXthree, 1.1),
+                      duration: const Duration(milliseconds: 0),
+                      child: MyBarrier(size: 200.0)),
+                  AnimatedContainer(
+                      alignment: Alignment(barrierXthree, -1.1),
+                      duration: const Duration(milliseconds: 0),
                       child: MyBarrier(size: 200.0)),
                 ],
               )),
