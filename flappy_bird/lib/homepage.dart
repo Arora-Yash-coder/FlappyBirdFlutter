@@ -47,6 +47,44 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void startGame() {
+    isGameRunning = true;
+    Timer.periodic(
+      const Duration(milliseconds: 35),
+      (timer) {
+        time += 0.04;
+        height = -4.9 * time * time + velocity * time;
+        setState(() {
+          birdY = initialHeight - height;
+        });
+
+        setState(() {
+          if (barrierXone < -2) {
+            barrierXone += 3.5;
+            score++;
+          } else {
+            barrierXone -= 0.05;
+          }
+        });
+
+        setState(() {
+          if (barrierXtwo < -2) {
+            barrierXtwo += 3.5;
+            score++;
+          } else {
+            barrierXtwo -= 0.05;
+          }
+        });
+
+        if (birdIsDead()) {
+          timer.cancel();
+          isGameRunning = false;
+          _showDialog();
+        }
+      },
+    );
+  }
+
   bool birdIsDead() {
     if (score > bestScore) {
       bestScore = score;
@@ -120,44 +158,6 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
-  void startGame() {
-    isGameRunning = true;
-    Timer.periodic(
-      const Duration(milliseconds: 50),
-      (timer) {
-        time += 0.04;
-        height = -4.9 * time * time + velocity * time;
-        setState(() {
-          birdY = initialHeight - height;
-        });
-
-        setState(() {
-          if (barrierXone < -2) {
-            barrierXone += 3.5;
-            score++;
-          } else {
-            barrierXone -= 0.05;
-          }
-        });
-
-        setState(() {
-          if (barrierXtwo < -2) {
-            barrierXtwo += 3.5;
-            score++;
-          } else {
-            barrierXtwo -= 0.05;
-          }
-        });
-
-        if (birdIsDead()) {
-          timer.cancel();
-          isGameRunning = false;
-          _showDialog();
-        }
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -229,10 +229,14 @@ class _HomePageState extends State<HomePage> {
                         )),
                   ],
                 )),
+
+            // Grass Area
             Container(
               height: 15,
               color: Colors.green,
             ),
+
+            //Ground Area
             Expanded(
                 child: Container(
               color: Colors.brown,
@@ -256,6 +260,8 @@ class _HomePageState extends State<HomePage> {
                       )
                     ],
                   ),
+
+                  // Best Score Widget
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
