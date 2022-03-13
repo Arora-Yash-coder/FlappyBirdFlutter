@@ -19,6 +19,8 @@ class _HomePageState extends State<HomePage> {
   double initialHeight = birdY;
   double velocity = 2.5;
   bool isGameRunning = false;
+  int score = 0;
+  int bestScore = 0;
 
   static double barrierXone = 1;
   double barrierXtwo = barrierXone + 1.5;
@@ -31,6 +33,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   bool birdIsDead() {
+    if (score > bestScore) {
+      bestScore = score;
+    }
     if (birdY > 1 || birdY < -1) {
       return true;
     }
@@ -44,6 +49,9 @@ class _HomePageState extends State<HomePage> {
       isGameRunning = false;
       time = 0;
       initialHeight = birdY;
+      barrierXone = 1;
+      barrierXtwo = barrierXone + 1.5;
+      score = 0;
     });
   }
 
@@ -98,6 +106,7 @@ class _HomePageState extends State<HomePage> {
         setState(() {
           if (barrierXone < -2) {
             barrierXone += 3.5;
+            score++;
           } else {
             barrierXone -= 0.05;
           }
@@ -106,6 +115,7 @@ class _HomePageState extends State<HomePage> {
         setState(() {
           if (barrierXtwo < -2) {
             barrierXtwo += 3.5;
+            score++;
           } else {
             barrierXtwo -= 0.05;
           }
@@ -187,7 +197,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Text(
                         "Score",
                         style: TextStyle(color: Colors.white, fontSize: 20),
@@ -196,14 +206,14 @@ class _HomePageState extends State<HomePage> {
                         height: 20,
                       ),
                       Text(
-                        '0',
+                        score.toString(),
                         style: TextStyle(color: Colors.white, fontSize: 35),
                       )
                     ],
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Text(
                         "Best Score",
                         style: TextStyle(color: Colors.white, fontSize: 20),
@@ -212,7 +222,7 @@ class _HomePageState extends State<HomePage> {
                         height: 20,
                       ),
                       Text(
-                        '10',
+                        bestScore.toString(),
                         style: TextStyle(color: Colors.white, fontSize: 35),
                       )
                     ],
