@@ -13,17 +13,32 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // bird positional variables
   static double birdY = 0;
+  double birdHeight = 0.1;
+  double birdWidth = 0.1;
+
+  // bird movement variables
   double time = 0;
   double height = 0;
   double initialHeight = birdY;
   double velocity = 2.5;
-  bool isGameRunning = false;
+
+  // scores
   int score = 0;
   int bestScore = 0;
 
+  // game settings
+  bool isGameRunning = false;
+
+  // barrier variables
   static double barrierXone = 1;
   double barrierXtwo = barrierXone + 1.5;
+  static double barrierWidth = 0.5;
+  List<List<double>> barrierHeight = [
+    [0.5, 0.7],
+    [0.6, 0.6],
+  ];
 
   void jump() {
     setState(() {
@@ -39,6 +54,19 @@ class _HomePageState extends State<HomePage> {
     if (birdY > 1 || birdY < -1) {
       return true;
     }
+    if (barrierXone <= birdWidth &&
+        barrierXone + barrierWidth >= -birdWidth &&
+        (birdY <= -1 + barrierHeight[0][0] ||
+            birdY + birdHeight >= 1 - barrierHeight[0][1])) {
+      return true;
+    }
+    if (barrierXtwo <= birdWidth &&
+        barrierXtwo + barrierWidth >= -birdWidth &&
+        (birdY <= -1 + barrierHeight[1][0] ||
+            birdY + birdHeight >= 1 - barrierHeight[1][1])) {
+      return true;
+    }
+
     return false;
   }
 
@@ -95,7 +123,7 @@ class _HomePageState extends State<HomePage> {
   void startGame() {
     isGameRunning = true;
     Timer.periodic(
-      const Duration(milliseconds: 40),
+      const Duration(milliseconds: 50),
       (timer) {
         time += 0.04;
         height = -4.9 * time * time + velocity * time;
@@ -152,37 +180,53 @@ class _HomePageState extends State<HomePage> {
                       duration: const Duration(milliseconds: 0),
                       child: MyBird(
                         birdY: birdY,
+                        birdWidth: birdWidth,
+                        birdHeight: birdHeight,
                       ),
                       color: Colors.blue,
                     ),
                     Container(
                       alignment: const Alignment(0, -0.25),
-                      child: isGameRunning
-                          ? const Text(" ")
-                          : const Text(
-                              "T A P  T O  P L A Y",
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
-                              ),
-                            ),
+                      child: Text(
+                        isGameRunning ? "" : "T A P  T O  P L A Y",
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                     AnimatedContainer(
-                        alignment: Alignment(barrierXone, 1.1),
                         duration: const Duration(milliseconds: 0),
-                        child: MyBarrier(size: 200.0)),
+                        child: MyBarrier(
+                          isBottomBarrier: false,
+                          barrierHeight: barrierHeight[0][0],
+                          barrierWidth: barrierWidth,
+                          barrierX: barrierXone,
+                        )),
                     AnimatedContainer(
-                        alignment: Alignment(barrierXone, -1.1),
                         duration: const Duration(milliseconds: 0),
-                        child: MyBarrier(size: 200.0)),
+                        child: MyBarrier(
+                          isBottomBarrier: true,
+                          barrierHeight: barrierHeight[0][1],
+                          barrierWidth: barrierWidth,
+                          barrierX: barrierXone,
+                        )),
                     AnimatedContainer(
-                        alignment: Alignment(barrierXtwo, 1.1),
                         duration: const Duration(milliseconds: 0),
-                        child: MyBarrier(size: 150.0)),
+                        child: MyBarrier(
+                          isBottomBarrier: false,
+                          barrierHeight: barrierHeight[1][0],
+                          barrierWidth: barrierWidth,
+                          barrierX: barrierXtwo,
+                        )),
                     AnimatedContainer(
-                        alignment: Alignment(barrierXtwo, -1.1),
                         duration: const Duration(milliseconds: 0),
-                        child: MyBarrier(size: 250.0)),
+                        child: MyBarrier(
+                          isBottomBarrier: true,
+                          barrierHeight: barrierHeight[1][1],
+                          barrierWidth: barrierWidth,
+                          barrierX: barrierXtwo,
+                        )),
                   ],
                 )),
             Container(
@@ -198,32 +242,34 @@ class _HomePageState extends State<HomePage> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         "Score",
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Text(
                         score.toString(),
-                        style: TextStyle(color: Colors.white, fontSize: 35),
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 35),
                       )
                     ],
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         "Best Score",
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Text(
                         bestScore.toString(),
-                        style: TextStyle(color: Colors.white, fontSize: 35),
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 35),
                       )
                     ],
                   )
