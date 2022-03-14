@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 
 class MyBarrier extends StatelessWidget {
+  // Barrier's Width
   final double barrierWidth;
+  // Barrier's Height
   final double barrierHeight;
+  // Barrier's Position on X axis
   final double barrierX;
+  // Barrier's Position [Top or Bottom]
   final bool isBottomBarrier;
 
+  // Constructor
   MyBarrier(
       {required this.barrierX,
       required this.barrierHeight,

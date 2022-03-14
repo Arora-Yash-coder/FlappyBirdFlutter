@@ -20,7 +20,7 @@ class MyBird extends StatelessWidget {
       width: MediaQuery.of(context).size.height * 3 / 4 * birdWidth / 2,
       child: Image.asset(
         'lib/images/flappy.png',
-        fit: BoxFit.fill,
+        fit: BoxFit.cover,
       ),
     );
   }

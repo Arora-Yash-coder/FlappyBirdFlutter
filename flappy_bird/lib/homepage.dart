@@ -40,14 +40,14 @@ class _HomePageState extends State<HomePage> {
     [0.6, 0.6],
   ];
 
-  void jump() {
+  void _jump() {
     setState(() {
       time = 0;
       initialHeight = birdY;
     });
   }
 
-  void startGame() {
+  void _startGame() {
     isGameRunning = true;
     Timer.periodic(
       const Duration(milliseconds: 35),
@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
           }
         });
 
-        if (birdIsDead()) {
+        if (_birdIsDead()) {
           timer.cancel();
           isGameRunning = false;
           _showDialog();
@@ -85,7 +85,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  bool birdIsDead() {
+  bool _birdIsDead() {
     if (score > bestScore) {
       bestScore = score;
     }
@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
     return false;
   }
 
-  void resetGame() {
+  void _resetGame() {
     Navigator.pop(context); // dismisses the alert dialog
     setState(() {
       birdY = 0;
@@ -139,7 +139,7 @@ class _HomePageState extends State<HomePage> {
             actions: [
               Center(
                 child: GestureDetector(
-                  onTap: resetGame,
+                  onTap: _resetGame,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(5),
                     child: Container(
@@ -163,9 +163,9 @@ class _HomePageState extends State<HomePage> {
     return GestureDetector(
       onTap: () {
         if (isGameRunning) {
-          jump();
+          _jump();
         } else {
-          startGame();
+          _startGame();
         }
       },
       child: Scaffold(
