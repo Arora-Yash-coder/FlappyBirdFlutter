@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   double time = 0;
   double height = 0;
   double initialHeight = birdY;
-  double velocity = 2.5;
+  double velocity = 3.2;
 
   // scores
   int score = 0;
@@ -50,9 +50,9 @@ class _HomePageState extends State<HomePage> {
   void _startGame() {
     isGameRunning = true;
     Timer.periodic(
-      const Duration(milliseconds: 35),
+      const Duration(milliseconds: 16),
       (timer) {
-        time += 0.04;
+        time += 0.014;
         height = -4.9 * time * time + velocity * time;
         setState(() {
           birdY = initialHeight - height;
@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
             barrierXone += 3.5;
             score++;
           } else {
-            barrierXone -= 0.05;
+            barrierXone -= 0.025;
           }
         });
 
@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
             barrierXtwo += 3.5;
             score++;
           } else {
-            barrierXtwo -= 0.05;
+            barrierXtwo -= 0.025;
           }
         });
 
