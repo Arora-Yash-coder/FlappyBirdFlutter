@@ -94,14 +94,14 @@ class _HomePageState extends State<HomePage> {
     }
     if (barrierXone <= birdWidth &&
         barrierXone + barrierWidth >= -birdWidth &&
-        (birdY <= -1 + barrierHeight[0][0] ||
-            birdY + birdHeight >= 1 - barrierHeight[0][1])) {
+        (birdY <= -1.04 + barrierHeight[0][0] ||
+            birdY + birdHeight >= 1.1 - barrierHeight[0][1])) {
       return true;
     }
     if (barrierXtwo <= birdWidth &&
         barrierXtwo + barrierWidth >= -birdWidth &&
-        (birdY <= -1 + barrierHeight[1][0] ||
-            birdY + birdHeight >= 1 - barrierHeight[1][1])) {
+        (birdY <= -1.04 + barrierHeight[1][0] ||
+            birdY + birdHeight >= 1.1 - barrierHeight[1][1])) {
       return true;
     }
 
@@ -127,7 +127,7 @@ class _HomePageState extends State<HomePage> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.transparent,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             title: const Center(
